@@ -1,0 +1,20 @@
+{
+  "name": "hyde-js",
+  "version": "1.0.0",
+  "description": "Static site generator",
+  "homepage": "https://github.com/mjmiller41/hyde-js#readme",
+  "bugs": {
+    "url": "https://github.com/mjmiller41/hyde-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjmiller41/hyde-js.git"
+  },
+  "license": "MIT",
+  "author": "Michael Joseph Miller",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
