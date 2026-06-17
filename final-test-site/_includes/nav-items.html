@@ -1,7 +1,0 @@
-<div class="nav-items">
-  {%- for p in site.pages -%}
-  {%- if p.title %}
-  <a class="nav-item" href="{{ p.url | relative_url }}">{{ p.title | escape }}</a>
-  {%- endif -%}
-  {%- endfor %}
-</div>
