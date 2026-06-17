@@ -10,15 +10,11 @@ You can find the source code for Minima (the original inspiration for this theme
 [jekyll](https://github.com/jekyll) /
 [minima](https://github.com/jekyll/minima)
 
-You can find the source code for HydeJS at GitHub:
+You can find the source code for HydeJS and this theme at GitHub:
 [Hyde-JS][hydejs-organization] /
 [hydejs](https://github.com/Hyde-JS/hydejs)
 
 This theme is available as an NPM package:
 [@hydejs/theme-default](https://www.npmjs.com/package/@hydejs/theme-default)
-
-You can find the source code for this theme at GitHub:
-[mjmiller41](https://github.com/mjmiller41) /
-[theme-default](https://github.com/mjmiller41/theme-default)
 
 [hydejs-organization]: https://github.com/Hyde-JS
