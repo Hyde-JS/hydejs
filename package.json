@@ -1,7 +1,7 @@
 {
-  "name": "hyde-js",
-  "version": "1.0.0",
-  "description": "Static site generator",
+  "name": "hydejs",
+  "version": "0.1.0",
+  "description": "Static site generator using Nodejs",
   "homepage": "https://github.com/mjmiller41/hyde-js#readme",
   "bugs": {
     "url": "https://github.com/mjmiller41/hyde-js/issues"
@@ -13,8 +13,25 @@
   "license": "MIT",
   "author": "Michael Joseph Miller",
   "type": "module",
+  "bin": {
+    "hydejs": "./bin/hydejs.js",
+    "hyde": "./bin/hydejs.js"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "browser-sync": "^3.0.4",
+    "chokidar": "^5.0.0",
+    "commander": "^15.0.0",
+    "fs-extra": "^11.3.5",
+    "glob": "^13.0.6",
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.2.0",
+    "liquidjs": "^10.27.0",
+    "markdown-it": "^14.2.0",
+    "sass": "^1.101.0",
+    "shiki": "^4.2.0"
   }
 }

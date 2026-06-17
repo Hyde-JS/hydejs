@@ -1,0 +1,8 @@
+node_modules/
+_site/
+.jekyll-cache/
+.jekyll-metadata/
+my-site/
+demo-site/
+test-site-new/
+package-lock.json
