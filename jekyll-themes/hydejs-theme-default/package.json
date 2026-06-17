@@ -12,7 +12,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hyde-JS/hydejs.git",
-    "directory": "jekyll-themes/hydejs-theme-default"
+    "url": "git+https://github.com/Hyde-JS/theme-default.git"
   }
 }
