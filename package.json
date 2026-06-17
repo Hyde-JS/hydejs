@@ -1,6 +1,6 @@
 {
   "name": "@hydejs/hydejs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Static site generator using Nodejs",
   "homepage": "https://github.com/Hyde-JS/hydejs#readme",
   "bugs": {
