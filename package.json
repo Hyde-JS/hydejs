@@ -1,5 +1,5 @@
 {
-  "name": "hydejs",
+  "name": "@hydejs/hydejs",
   "version": "0.1.0",
   "description": "Static site generator using Nodejs",
   "homepage": "https://github.com/Hyde-JS/hydejs#readme",
@@ -30,6 +30,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@hydejs/theme-default": "^0.1.0",
     "browser-sync": "^3.0.4",
     "chokidar": "^5.0.0",
     "commander": "^15.0.0",

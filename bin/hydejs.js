@@ -28,7 +28,7 @@ program
   .command('new <path>')
   .description('Creates a new HydeJS site at specified path')
   .option('--blank', 'Creates a blank site scaffold')
-  .option('--theme <name>', 'Theme to use for scaffolding', 'minima')
+  .option('--theme <name>', 'Theme to use for scaffolding', '@hydejs/theme-default')
   .action(async (path, options) => {
     await createNewSite(path, options.blank, options.theme);
   });

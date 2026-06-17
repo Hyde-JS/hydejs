@@ -1,0 +1,18 @@
+{
+  "name": "@hydejs/theme-default",
+  "version": "0.1.0",
+  "description": "The default theme for HydeJS, providing full Jekyll compatibility and modern features.",
+  "keywords": [
+    "hydejs",
+    "theme",
+    "jekyll",
+    "static-site-generator"
+  ],
+  "author": "Michael Joseph Miller",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hyde-JS/hydejs.git",
+    "directory": "jekyll-themes/hydejs-theme-default"
+  }
+}

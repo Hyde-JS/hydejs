@@ -1,11 +1,30 @@
 import fs from 'fs-extra';
 import { join, dirname, relative } from 'path';
 import { fileURLToPath } from 'url';
+import { realpathSync } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-export async function createNewSite(destPath, isBlank = false, themeName = 'minima') {
+async function findThemePath(themeName) {
+  // 1. Try to find in node_modules (the Node-way)
+  // We check relative to the current file (src/scaffold.js -> ../node_modules)
+  const nodeModulesPath = join(__dirname, '../node_modules', themeName);
+  if (fs.existsSync(nodeModulesPath)) {
+    return realpathSync(nodeModulesPath);
+  }
+
+  // 2. Try the local jekyll-themes directory (legacy/internal)
+  const themesDir = join(__dirname, '../jekyll-themes');
+  const internalPath = join(themesDir, themeName);
+  if (fs.existsSync(internalPath)) {
+    return internalPath;
+  }
+
+  return null;
+}
+
+export async function createNewSite(destPath, isBlank = false, themeName = '@hydejs/theme-default') {
   await fs.ensureDir(destPath);
 
   if (isBlank) {
@@ -23,14 +42,13 @@ url: "http://example.com"
     return;
   }
 
-  const themesDir = join(__dirname, '../jekyll-themes');
-  const themePath = join(themesDir, themeName);
+  const themePath = await findThemePath(themeName);
 
-  if (!fs.existsSync(themePath)) {
-    console.error(`Theme "${themeName}" not found in ${themesDir}`);
-    if (themeName !== 'minima') {
-      console.log('Falling back to "minima" theme...');
-      return createNewSite(destPath, isBlank, 'minima');
+  if (!themePath) {
+    console.error(`Theme "${themeName}" not found in node_modules or jekyll-themes.`);
+    if (themeName !== '@hydejs/theme-default') {
+      console.log('Falling back to "@hydejs/theme-default" theme...');
+      return createNewSite(destPath, isBlank, '@hydejs/theme-default');
     }
     return;
   }
