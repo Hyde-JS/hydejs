@@ -1,6 +1,6 @@
 {
   "name": "@hydejs/theme-default",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "The default theme for HydeJS, providing full Jekyll compatibility and modern features.",
   "keywords": [
     "hydejs",
