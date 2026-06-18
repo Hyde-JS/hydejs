@@ -92,17 +92,16 @@ a {
       &.active, &:hover {
         color: $text-main;
       }
-      &.github-link {
-        background: linear-gradient(135deg, $primary, $primary-glow);
-        color: #0b0f19;
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-        box-shadow: 0 4px 12px rgba($primary, 0.3);
-        &:hover {
-          background: linear-gradient(135deg, lighten($primary, 5%), lighten($primary-glow, 5%));
-          transform: translateY(-1px);
-          color: #0b0f19;
-        }
+    }
+
+    .github-icon-link {
+      color: $primary;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s ease, transform 0.2s ease;
+      &:hover {
+        color: $primary-glow;
+        transform: scale(1.1);
       }
     }
   }

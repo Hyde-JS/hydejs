@@ -13,7 +13,6 @@ title: HydeJS - Node.js Static Site Generator
   
   <div class="hero-buttons">
     <a href="{{ '/docs/01-getting-started/' | relative_url }}" class="btn btn-primary">Get Started</a>
-    <a href="https://github.com/Hyde-JS/hydejs" target="_blank" rel="noopener" class="btn btn-secondary">GitHub</a>
   </div>
 </div>
 
