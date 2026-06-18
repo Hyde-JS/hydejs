@@ -1,8 +1,8 @@
 # HydeJS Configuration
 title: HydeJS
 description: A fast, lightweight static site generator built on Node.js with Jekyll parity.
-baseurl: "/hydejs"
-url: "https://hydejs.org"
+baseurl: "/"
+url: "https://hydejs.io"
 
 collections:
   docs:
