@@ -1,0 +1,18 @@
+title: HydeJS
+description: A fast, lightweight static site generator built on Node.js with Jekyll parity.
+baseurl: ""
+url: "https://hydejs.org"
+
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+    order:
+      - 01-getting-started.md
+      - 02-directory-structure.md
+      - 03-configuration.md
+      - 04-pages-and-posts.md
+      - 05-collections.md
+      - 06-liquid-filters-tags.md
+      - 07-theme-engine.md
+      - 08-cli-commands.md

@@ -59,6 +59,25 @@ HydeJS follows standard Jekyll conventions:
 - `_config.yml`: Site-wide configuration and metadata.
 - `assets/`: Static assets like CSS, images, and JavaScript.
 
+## Configuration
+
+HydeJS is configured via a `_config.yml` file in your root directory. If a key is missing from your config file, HydeJS will use the following default values:
+
+| Key | Default Value | Description |
+| :--- | :--- | :--- |
+| `title` | `My HydeJS Site` | The title of your website. |
+| `description` | `A Node.js-based static site generator inspired by Jekyll` | A short description for SEO meta tags. |
+| `author` | `{ name: "HydeJS User", email: "user@example.com" }` | Default author information. |
+| `source` | `.` | Root directory for your site files. |
+| `destination` | `_site` | Output directory for the generated site. |
+| `layouts_dir` | `_layouts` | Directory for Liquid layout files. |
+| `posts_dir` | `_posts` | Directory for blog posts. |
+| `includes_dir` | `_includes` | Directory for reusable partials. |
+| `data_dir` | `_data` | Directory for YAML/JSON data files. |
+| `baseurl` | `""` | The subpath your site will be served from. |
+| `url` | `""` | The full hostname of your site. |
+| `markdown` | `markdown-it` | The markdown processor used. |
+
 ## Contributing
 
 We are actively building the future of HydeJS! Check out our [ROADMAP.md](./ROADMAP.md) to see what's coming next, or visit the [Hyde-JS Organization](https://github.com/Hyde-JS) to get involved.

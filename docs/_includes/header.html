@@ -1,0 +1,14 @@
+<header class="navbar">
+  <div class="navbar-brand">
+    <a href="{{ '/' | relative_url }}" class="brand-link">
+      <span class="brand-logo">⚡</span>
+      <span class="brand-name">HydeJS</span>
+    </a>
+  </div>
+  
+  <nav class="navbar-menu">
+    <a href="{{ '/' | relative_url }}" class="menu-item {% if page.url == '/' %}active{% endif %}">Home</a>
+    <a href="{{ '/docs/01-getting-started/' | relative_url }}" class="menu-item {% if page.url contains '/docs/' %}active{% endif %}">Documentation</a>
+    <a href="https://github.com/Hyde-JS/hydejs" target="_blank" rel="noopener" class="menu-item github-link">GitHub</a>
+  </nav>
+</header>

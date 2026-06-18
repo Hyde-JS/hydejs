@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import { join, dirname, relative, extname, parse } from 'path';
+import { join, dirname, relative, extname, parse, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { loadConfig } from './config.js';
 import { getFiles, isMarkdown, isHtml } from './fs.js';
@@ -13,8 +13,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export async function clean(config) {
-  const dest = join(config.source, config.destination);
-  await fs.remove(dest);
+  const dest = resolve(config.source, config.destination);
+  await fs.emptyDir(dest);
   console.log(`Cleaned ${config.destination}`);
 }
 
@@ -62,13 +62,136 @@ async function loadData(config) {
 
 export async function build(config) {
   const sourceDir = config.source;
-  const destDir = join(sourceDir, config.destination);
+  const destDir = resolve(sourceDir, config.destination);
   const liquid = await createLiquidEngine(config);
 
   await fs.ensureDir(destDir);
 
   const allFiles = await getFiles(sourceDir);
   const siteDataObj = await loadData(config);
+  
+  // Load custom collections
+  const collectionsConfig = config.collections || {};
+  const normalizedCollections = {};
+  const collectionsDocs = {};
+
+  if (Array.isArray(collectionsConfig)) {
+    for (const col of collectionsConfig) {
+      normalizedCollections[col] = { output: false };
+    }
+  } else if (typeof collectionsConfig === 'object') {
+    for (const [key, val] of Object.entries(collectionsConfig)) {
+      normalizedCollections[key] = { output: false, ...val };
+    }
+  }
+
+  // Sorting helpers for Jekyll collections
+  const defaultSort = (a, b) => {
+    if (a.date && b.date) {
+      return new Date(a.date) - new Date(b.date);
+    }
+    return a.path.localeCompare(b.path);
+  };
+
+  const sortCollectionDocs = (docs, colConfig) => {
+    if (Array.isArray(colConfig.order)) {
+      const orderMap = new Map(colConfig.order.map((name, index) => [name.replace(/\\/g, '/'), index]));
+      docs.sort((a, b) => {
+        // Filename relative to the collection folder (removing `_collectionName/`)
+        const cleanPathA = a.path.substring(a.path.indexOf('/') + 1).replace(/\\/g, '/');
+        const cleanPathB = b.path.substring(b.path.indexOf('/') + 1).replace(/\\/g, '/');
+        const idxA = orderMap.has(cleanPathA) ? orderMap.get(cleanPathA) : Infinity;
+        const idxB = orderMap.has(cleanPathB) ? orderMap.get(cleanPathB) : Infinity;
+        if (idxA !== idxB) return idxA - idxB;
+        return defaultSort(a, b);
+      });
+      return;
+    }
+
+    if (typeof colConfig.sort_by === 'string') {
+      const key = colConfig.sort_by;
+      docs.sort((a, b) => {
+        const valA = a[key];
+        const valB = b[key];
+        const hasA = valA !== undefined;
+        const hasB = valB !== undefined;
+        if (hasA && hasB) {
+          if (valA < valB) return -1;
+          if (valA > valB) return 1;
+          return defaultSort(a, b);
+        }
+        if (hasA) return -1;
+        if (hasB) return 1;
+        return defaultSort(a, b);
+      });
+      return;
+    }
+
+    docs.sort(defaultSort);
+  };
+
+  for (const colName of Object.keys(normalizedCollections)) {
+    if (colName === 'posts') continue;
+    collectionsDocs[colName] = [];
+    
+    // Support custom collections_dir
+    const colDir = config.collections_dir
+      ? join(sourceDir, config.collections_dir, `_${colName}`)
+      : join(sourceDir, `_${colName}`);
+      
+    if (await fs.pathExists(colDir)) {
+      const colFiles = await getFiles(colDir);
+      for (const file of colFiles) {
+        const filePath = join(colDir, file);
+        if ((await fs.stat(filePath)).isDirectory()) continue;
+
+        const fileContent = await fs.readFile(filePath, 'utf8');
+        const hasFrontMatter = fileContent.trimStart().startsWith('---');
+        const { data, content: body } = hasFrontMatter ? matter(fileContent) : { data: {}, content: fileContent };
+
+        const fileParsed = parse(file);
+        const pathWithoutExt = join(fileParsed.dir, fileParsed.name);
+        const titleName = fileParsed.name;
+
+        // Default URL path
+        let url = hasFrontMatter
+          ? `/${colName}/${pathWithoutExt}.html`.replace(/\\/g, '/')
+          : `/${colName}/${file}`.replace(/\\/g, '/');
+        const colMetadata = normalizedCollections[colName];
+        const permalinkPattern = data.permalink || colMetadata.permalink;
+        
+        if (permalinkPattern) {
+          url = permalinkPattern
+            .replace(/:path/g, pathWithoutExt)
+            .replace(/:title/g, titleName)
+            .replace(/:name/g, titleName)
+            .replace(/:collection/g, colName)
+            .replace(/:output_ext/g, '.html');
+          if (!url.startsWith('/')) {
+            url = '/' + url;
+          }
+        }
+        url = url.replace(/\/+/g, '/').replace(/\/index\.html$/, '/');
+
+        const docInfo = {
+          ...data,
+          body,
+          url,
+          path: join(`_${colName}`, file),
+          relative_path: join(`_${colName}`, file),
+          collection: colName,
+          isAsset: !hasFrontMatter, // treated as static asset if no front matter
+          content: body // Jekyll stores unrendered content in 'content' attribute
+        };
+
+        collectionsDocs[colName].push(docInfo);
+      }
+
+      // Sort documents based on Jekyll guidelines
+      const colMetadata = normalizedCollections[colName];
+      sortCollectionDocs(collectionsDocs[colName], colMetadata);
+    }
+  }
   
   const pages = [];
   const posts = [];
@@ -157,11 +280,40 @@ export async function build(config) {
     }
   };
 
+  // Expose collections on siteData
+  const collectionsList = [];
+  collectionsList.push({
+    label: 'posts',
+    docs: posts,
+    output: true
+  });
+
+  for (const [colName, colConfig] of Object.entries(normalizedCollections)) {
+    if (colName === 'posts') continue;
+    const docs = collectionsDocs[colName] || [];
+    collectionsList.push({
+      label: colName,
+      docs: docs,
+      output: colConfig.output || false,
+      permalink: colConfig.permalink
+    });
+    siteData[colName] = docs;
+  }
+  siteData.collections = collectionsList;
+
   const pagesToRender = [];
   const paginateLimit = parseInt(config.paginate);
   const paginatePath = config.paginate_path || 'page:num/';
 
-  for (const page of [...pages, ...posts]) {
+  const customCollectionPagesToRender = [];
+  for (const [colName, colConfig] of Object.entries(normalizedCollections)) {
+    if (colName === 'posts') continue;
+    if (colConfig.output === true) {
+      customCollectionPagesToRender.push(...(collectionsDocs[colName] || []));
+    }
+  }
+
+  for (const page of [...pages, ...posts, ...customCollectionPagesToRender]) {
     // Check if this page should be paginated
     // Jekyll usually paginates the index page if paginate is set
     const isIndexPage = page.path === 'index.md' || page.path === 'index.html';
@@ -204,7 +356,7 @@ export async function build(config) {
   for (const page of pagesToRender) {
     let destPathRelative = page.customDestPath || page.path.replace(/\.(md|markdown)$/, '.html').replace(/\.s[ac]ss$/, '.css');
     
-    if (!page.customDestPath && (page.isPost || page.permalink)) {
+    if (!page.customDestPath && (page.isPost || page.permalink || page.collection)) {
       const url = page.url;
       if (url.endsWith('/')) {
         destPathRelative = join(url, 'index.html');
@@ -254,6 +406,8 @@ export async function build(config) {
       const liquidRenderedBody = await liquid.parseAndRender(page.body, pageData);
       const highlighter = await getHighlighterInstance();
       const htmlContent = isMarkdown(page.path) ? parseMarkdown(liquidRenderedBody, highlighter).html : liquidRenderedBody;
+      page.content = htmlContent;
+      page.output = htmlContent;
       const finalHtml = await renderWithLayout(liquid, htmlContent, pageData, page.layout, config);
       await fs.writeFile(destPath, finalHtml);
     } catch (err) {

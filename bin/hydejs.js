@@ -8,6 +8,7 @@ import { loadConfig } from '../src/config.js';
 import { build, clean } from '../src/build.js';
 import { serve } from '../src/serve.js';
 import { createNewSite, createNewTheme } from '../src/scaffold.js';
+import { installTheme } from '../src/install.js';
 import { doctor } from '../src/doctor.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -37,8 +38,15 @@ program
   .command('build')
   .alias('b')
   .description('Performs a one-off build of your site')
-  .action(async () => {
-    const config = loadConfig();
+  .option('-s, --source <dir>', 'Source directory')
+  .option('-d, --destination <dir>', 'Destination directory')
+  .action(async (options) => {
+    const source = options.source || process.cwd();
+    const config = loadConfig(source);
+    config.source = source;
+    if (options.destination) {
+      config.destination = options.destination;
+    }
     await build(config);
   });
 
@@ -46,11 +54,15 @@ program
   .command('serve')
   .alias('s')
   .description('Builds site and serves it locally with live-reload')
+  .option('-s, --source <dir>', 'Source directory')
+  .option('-d, --destination <dir>', 'Destination directory')
   .option('--config <path>', 'Alternative configuration file')
   .action(async (options) => {
-    const config = loadConfig();
-    if (options.config) {
-      // Handle alternative config if needed, for now just load default
+    const source = options.source || process.cwd();
+    const config = loadConfig(source);
+    config.source = source;
+    if (options.destination) {
+      config.destination = options.destination;
     }
     await serve(config);
   });
@@ -58,9 +70,24 @@ program
 program
   .command('clean')
   .description('Removes all generated files')
-  .action(async () => {
-    const config = loadConfig();
+  .option('-s, --source <dir>', 'Source directory')
+  .option('-d, --destination <dir>', 'Destination directory')
+  .action(async (options) => {
+    const source = options.source || process.cwd();
+    const config = loadConfig(source);
+    config.source = source;
+    if (options.destination) {
+      config.destination = options.destination;
+    }
     await clean(config);
+  });
+
+program
+  .command('install')
+  .description('Installs and converts a Jekyll theme from a repository')
+  .requiredOption('-t, --theme <repo_url>', 'URL of the Jekyll theme repository')
+  .action(async (options) => {
+    await installTheme(options.theme);
   });
 
 program

@@ -1,0 +1,10 @@
+<aside class="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-heading">Guides</div>
+    {% for doc in site.docs %}
+      <a href="{{ doc.url | relative_url }}" class="sidebar-link {% if page.url == doc.url %}active{% endif %}">
+        {{ doc.title }}
+      </a>
+    {% endfor %}
+  </nav>
+</aside>

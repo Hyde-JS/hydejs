@@ -3,12 +3,12 @@
 A vision for a pure Node.js static site generator with full Jekyll parity and modern enhancements.
 
 ## Current Priority 🎯
-- [ ] **NPM-based Theme System:** Support for loading and updating themes via `npm install`, keeping project directories clean and allowing themes to be distributed as packages.
+- [x] **NPM-based Theme System:** Support for loading and updating themes via `npm install`, keeping project directories clean and allowing themes to be distributed as packages.
 
 ## Phase 1: Full Jekyll Parity 🏗️
 - [x] **Native Pagination:** Built-in engine to handle blog post pagination without external dependencies.
 - [x] **Advanced Liquid Filters:** Full support for `group_by`, `where_exp`, `sort`, and `markdownify`.
-- [ ] **Collection Support:** Ability to define custom collections (e.g., `_portfolio`, `_team`) in `_config.yml`.
+- [x] **Collection Support:** Ability to define custom collections (e.g., `_portfolio`, `_team`) in `_config.yml`.
 - [ ] **Drafts Handling:** Support for the `_drafts` directory and a `--drafts` CLI flag.
 - [ ] **Universal Markdownify:** Ensure any configuration field or front-matter data can be parsed as Markdown.
 

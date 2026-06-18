@@ -1,0 +1,12 @@
+{
+  "name": "@hydejs/jekyll-to-hyde",
+  "version": "0.1.0",
+  "description": "A utility to convert Jekyll themes into HydeJS-compatible NPM packages",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^11.3.5",
+    "simple-git": "^3.27.0"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@hydejs/hydejs",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "Static site generator using Nodejs",
   "homepage": "https://github.com/Hyde-JS/hydejs#readme",
   "bugs": {
@@ -27,10 +27,13 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test test/**/*.test.js",
+    "test:coverage": "node --experimental-test-coverage --test test/**/*.test.js"
   },
   "dependencies": {
+    "@hydejs/jekyll-to-hyde": "file:./jekyll-to-hyde",
     "@hydejs/theme-default": "^0.1.9",
+    "@hydejs/theme-minima": "file:new-site/.hydejs-themes/minima",
     "browser-sync": "^3.0.4",
     "chokidar": "^5.0.0",
     "commander": "^15.0.0",

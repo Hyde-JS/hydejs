@@ -1,0 +1,17 @@
+{
+  "name": "@hydejs/theme-minima",
+  "version": "0.1.0",
+  "description": "HydeJS theme converted from https://github.com/jekyll/minima",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "files": [
+    "_includes",
+    "_layouts",
+    "_sass",
+    "assets",
+    "_config.yml",
+    "README.md",
+    "LICENSE.txt"
+  ]
+}

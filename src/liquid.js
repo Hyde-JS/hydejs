@@ -75,6 +75,7 @@ export async function createLiquidEngine(config) {
   });
 
   engine.registerFilter('markdownify', (content) => {
+    if (typeof content !== 'string') return '';
     const { html } = parseMarkdown(content, highlighter);
     return html;
   });

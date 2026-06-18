@@ -1,0 +1,33 @@
+# Site-wide settings
+# ------------------
+title: HydeJS Demo Site
+description: >
+  This is a demonstration site for HydeJS, a static site generator 
+  built on Node.js with full Jekyll compatibility and modern features.
+
+author:
+  name: HydeJS Contributor
+  email: demo@hydejs.org
+
+# Build settings
+# --------------
+# theme: minima-demo
+
+# Minima-specific settings (applicable to Minima v3 and above only)
+# -----------------------------------------------------------------
+minima:
+  skin: auto
+  show_excerpts: true
+  date_format: "%b %d, %Y"
+  social_links:
+    - title: HydeJS repository at GitHub
+      icon: github
+      url: "https://github.com/mjmiller41/hyde-js"
+    - title: HydeJS Theme repository at GitHub
+      icon: github
+      url: "https://github.com/jekyll/minima"
+
+# Pagination settings
+# -------------------
+paginate: 5
+paginate_path: "page:num/"

@@ -1,0 +1,409 @@
+// HydeJS Documentation Premium Stylesheet
+// Built using Sass variables, nesting, and Glassmorphism design system.
+
+// 1. Theme Tokens
+$bg-dark: #0b0f19;
+$bg-card: rgba(17, 24, 39, 0.6);
+$border-color: rgba(79, 70, 229, 0.2);
+$border-hover: rgba(79, 70, 229, 0.4);
+$text-main: #f3f4f6;
+$text-muted: #9ca3af;
+$primary: #4f46e5;
+$primary-glow: #6366f1;
+$accent: #10b981;
+$font-sans: 'Inter', sans-serif;
+$font-mono: 'JetBrains Mono', monospace;
+
+// 2. Global Resets
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: $bg-dark;
+  color: $text-main;
+  font-family: $font-sans;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: $primary-glow;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  &:hover {
+    color: lighten($primary-glow, 10%);
+  }
+}
+
+// 3. Layout Blocks
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+// Top Navbar
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(11, 15, 25, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid $border-color;
+
+  .navbar-brand {
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: $text-main;
+      .brand-logo {
+        text-shadow: 0 0 10px rgba(99, 102, 241, 0.6);
+      }
+    }
+  }
+
+  .navbar-menu {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+
+    .menu-item {
+      color: $text-muted;
+      font-size: 0.95rem;
+      font-weight: 500;
+      &.active, &:hover {
+        color: $text-main;
+      }
+      &.github-link {
+        background: linear-gradient(135deg, $primary, $primary-glow);
+        color: $text-main;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        &:hover {
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }
+}
+
+// Landing Page Hero
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  flex-grow: 1;
+}
+
+.hero-container {
+  text-align: center;
+  padding: 5rem 1rem 3rem;
+
+  .hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.05em;
+    .glowing-text {
+      display: inline-block;
+      animation: pulse 2s infinite alternate;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: $text-muted;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    .btn {
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+
+      &.btn-primary {
+        background: $accent;
+        color: $bg-dark;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        &:hover {
+          background: lighten($accent, 5%);
+          transform: translateY(-1px);
+        }
+      }
+      &.btn-secondary {
+        background: rgba(255, 255, 255, 0.05);
+        color: $text-main;
+        border: 1px solid $border-color;
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          border-color: $border-hover;
+        }
+      }
+    }
+  }
+}
+
+// Feature Grid
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 4rem;
+
+  .feature-card {
+    background: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: $border-hover;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(79, 70, 229, 0.1);
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: $text-main;
+    }
+
+    p {
+      color: $text-muted;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+  }
+}
+
+// Docs Layout
+.docs-layout {
+  display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  flex-grow: 1;
+}
+
+// Docs Sticky Sidebar
+.sidebar {
+  width: 280px;
+  position: sticky;
+  top: 75px;
+  height: calc(100vh - 75px);
+  overflow-y: auto;
+  padding: 2.5rem 1.5rem;
+  border-right: 1px solid $border-color;
+  flex-shrink: 0;
+
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .sidebar-heading {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: $text-muted;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    .sidebar-link {
+      color: $text-muted;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.03);
+        color: $text-main;
+      }
+
+      &.active {
+        background: rgba(79, 70, 229, 0.15);
+        color: $text-main;
+        border-left: 3px solid $primary-glow;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+}
+
+// Documentation Content
+.docs-content-container {
+  flex-grow: 1;
+  padding: 2.5rem 3rem;
+  max-width: 880px;
+  overflow-x: hidden;
+}
+
+// Markdown Styles (prose)
+.prose {
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 0.5rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.25rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.5rem;
+  }
+  p {
+    margin-bottom: 1.25rem;
+    color: #d1d5db;
+    font-size: 1.05rem;
+  }
+  ul, ol {
+    margin: 0 0 1.25rem 1.5rem;
+    li {
+      margin-bottom: 0.5rem;
+      color: #d1d5db;
+    }
+  }
+  code {
+    font-family: $font-mono;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #e2e8f0;
+  }
+  pre {
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid $border-color;
+    overflow-x: auto;
+    background-color: #0d1117 !important; // Match github-dark theme bg
+    code {
+      padding: 0;
+      background: none;
+      border-radius: 0;
+      font-size: 0.95rem;
+    }
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    th, td {
+      border: 1px solid $border-color;
+      padding: 0.75rem 1rem;
+      text-align: left;
+    }
+    th {
+      background: rgba(79, 70, 229, 0.1);
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+  }
+  blockquote {
+    border-left: 4px solid $accent;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: $text-muted;
+  }
+}
+
+// Footer
+.site-footer {
+  border-top: 1px solid $border-color;
+  padding: 2rem;
+  text-align: center;
+  background: rgba(11, 15, 25, 0.5);
+  margin-top: auto;
+
+  .footer-container {
+    p {
+      font-size: 0.9rem;
+      color: $text-muted;
+    }
+    .footer-subtext {
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+// Animations
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.15);
+    text-shadow: 0 0 15px rgba(99, 102, 241, 0.8);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .hero-container {
+    .hero-title {
+      font-size: 2.75rem;
+    }
+  }
+  .docs-layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid $border-color;
+    padding: 1.5rem;
+  }
+  .docs-content-container {
+    padding: 1.5rem;
+  }
+}

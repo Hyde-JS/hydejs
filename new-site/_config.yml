@@ -1,0 +1,21 @@
+title: HydeJS Demo Site
+description: >
+  This is a demonstration site for HydeJS, a static site generator  built on
+  Node.js with full Jekyll compatibility and modern features.
+author:
+  name: HydeJS Contributor
+  email: demo@hydejs.org
+minima:
+  skin: auto
+  show_excerpts: true
+  date_format: '%b %d, %Y'
+  social_links:
+    - title: HydeJS repository at GitHub
+      icon: github
+      url: https://github.com/mjmiller41/hyde-js
+    - title: HydeJS Theme repository at GitHub
+      icon: github
+      url: https://github.com/jekyll/minima
+paginate: 5
+paginate_path: page:num/
+theme: '@hydejs/theme-minima'
