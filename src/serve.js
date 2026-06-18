@@ -1,6 +1,6 @@
 import browserSync from 'browser-sync';
 import chokidar from 'chokidar';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { build } from './build.js';
 
 export async function serve(config) {
@@ -18,13 +18,24 @@ export async function serve(config) {
     ui: false
   });
 
-  const watcher = chokidar.watch(config.source, {
-    ignored: [
-      /(^|[\/\\])\../, // ignore dotfiles
-      join(config.source, config.destination, '**'),
-      '**/node_modules/**',
-      '.git/**'
-    ],
+  const absSource = resolve(config.source);
+  const absDest = resolve(config.source, config.destination);
+
+  const watcher = chokidar.watch(absSource, {
+    ignored: (filePath) => {
+      // Ignore dotfiles
+      if (/(^|[\/\\])\../.test(filePath)) return true;
+      // Ignore node_modules
+      if (filePath.includes('node_modules')) return true;
+      // Ignore git folder
+      if (filePath.includes('.git')) return true;
+      
+      // Ignore build destination folder and its children
+      const absFilePath = resolve(filePath);
+      if (absFilePath.startsWith(absDest)) return true;
+      
+      return false;
+    },
     persistent: true,
     ignoreInitial: true
   });
