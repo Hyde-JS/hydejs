@@ -94,12 +94,14 @@ a {
       }
       &.github-link {
         background: linear-gradient(135deg, $primary, $primary-glow);
-        color: $text-main;
+        color: #0b0f19;
         padding: 0.5rem 1rem;
         border-radius: 6px;
         box-shadow: 0 4px 12px rgba($primary, 0.3);
         &:hover {
+          background: linear-gradient(135deg, lighten($primary, 5%), lighten($primary-glow, 5%));
           transform: translateY(-1px);
+          color: #0b0f19;
         }
       }
     }
@@ -158,12 +160,13 @@ a {
       cursor: pointer;
 
       &.btn-primary {
-        background: $accent;
-        color: $bg-dark;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        background: linear-gradient(135deg, $primary, $primary-glow);
+        color: #0b0f19;
+        box-shadow: 0 4px 15px rgba($primary, 0.4);
         &:hover {
-          background: lighten($accent, 5%);
+          background: linear-gradient(135deg, lighten($primary, 5%), lighten($primary-glow, 5%));
           transform: translateY(-1px);
+          color: #0b0f19;
         }
       }
       &.btn-secondary {
