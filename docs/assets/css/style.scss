@@ -70,6 +70,13 @@ a {
       .brand-logo {
         text-shadow: 0 0 10px rgba(99, 102, 241, 0.6);
       }
+      .brand-logo-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        object-fit: cover;
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+      }
     }
   }
 
@@ -110,6 +117,15 @@ a {
 .hero-container {
   text-align: center;
   padding: 5rem 1rem 3rem;
+
+  .hero-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 24px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+    animation: pulse 3s infinite alternate;
+  }
 
   .hero-title {
     font-size: 4rem;

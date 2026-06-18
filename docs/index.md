@@ -4,7 +4,8 @@ title: HydeJS - Node.js Static Site Generator
 ---
 
 <div class="hero-container">
-  <h1 class="hero-title">HydeJS <span class="glowing-text">⚡</span></h1>
+  <img src="{{ '/assets/images/logo.jpg' | relative_url }}" alt="HydeJS Logo" class="hero-logo">
+  <h1 class="hero-title">HydeJS</h1>
   <p class="hero-subtitle">
     A fast, lightweight, and modern static site generator built on Node.js.
     Enjoy full Jekyll parity and modern tools with zero Ruby dependencies.
